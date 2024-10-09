@@ -1,0 +1,155 @@
+[gd_scene load_steps=14 format=3 uid="uid://cn1pb406olcs5"]
+
+[ext_resource type="Script" path="res://actors/enemies/Slime/basic_enemy.gd" id="1_yqvo5"]
+[ext_resource type="Texture2D" uid="uid://d3vyj4f1ba5ro" path="res://actors/enemies/Necro/Necromancer_creativekind-Sheet.png" id="2_h5iee"]
+[ext_resource type="Script" path="res://actors/enemies/Necro/necro_idle.gd" id="3_xchkn"]
+[ext_resource type="PackedScene" uid="uid://bw2hclbrwmhi4" path="res://actors/enemies/Necro/bullet.tscn" id="4_dt7d3"]
+[ext_resource type="Script" path="res://actors/enemies/Necro/necro_chasing.gd" id="4_e3usk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nw20k"]
+size = Vector2(75, 92)
+
+[sub_resource type="Animation" id="Animation_e8iav"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 7)]
+}
+
+[sub_resource type="Animation" id="Animation_wtxwp"]
+resource_name = "idle_slime"
+length = 0.23
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0), Vector2i(6, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_sgpve"]
+resource_name = "move_right"
+length = 0.23
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1), Vector2i(5, 1), Vector2i(6, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qbgib"]
+_data = {
+"RESET": SubResource("Animation_e8iav"),
+"idle_necro": SubResource("Animation_wtxwp"),
+"move_necro": SubResource("Animation_sgpve")
+}
+
+[sub_resource type="GDScript" id="GDScript_htvv1"]
+script/source = "extends Node2D  # or whatever type is appropriate
+
+@export var bullet_scene: PackedScene  # Assign your bullet scene in the inspector
+var shoot_timer: Timer
+
+func _ready():
+	# Create and configure the timer
+	shoot_timer = Timer.new()
+	shoot_timer.wait_time = 1.0  # Adjust the wait time for how often to shoot
+	shoot_timer.one_shot = false  # Set to true if you want it to shoot only once
+	add_child(shoot_timer)  # Add the timer to the scene tree
+	shoot_timer.start()  # Start the timer
+
+func _process(delta: float) -> void:
+	if shoot_timer.is_stopped() == false:  # Check if the timer is running
+		# Check if the timer has elapsed
+		if shoot_timer.time_left <= 0:
+			_on_shoot_timer_timeout()  # Call the shoot function
+			shoot_timer.start()  # Restart the timer
+
+func _on_shoot_timer_timeout():
+	if bullet_scene:  # Ensure bullet_scene is assigned
+		var bullet = bullet_scene.instantiate()
+		bullet.position = position  # Set bullet's position to the spawner's position
+		get_parent().add_child(bullet)  # Add the bullet to the parent
+	else:
+		print(\"Bullet scene is not assigned.\")
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qjgd1"]
+radius = 89.1067
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fadb5"]
+radius = 45.0
+height = 110.0
+
+[node name="BasicEnemy" type="CharacterBody2D" node_paths=PackedStringArray("initial_state") groups=["EnemyDie", "enemies"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_yqvo5")
+initial_state = NodePath("States/Idle")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9.5, 62)
+shape = SubResource("RectangleShape2D_nw20k")
+
+[node name="MainSprite" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_h5iee")
+hframes = 17
+vframes = 7
+frame = 17
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MainSprite"]
+libraries = {
+"": SubResource("AnimationLibrary_qbgib")
+}
+speed_scale = 0.3
+
+[node name="BulletSpawner" type="Node2D" parent="."]
+position = Vector2(34.935, 33.3)
+script = SubResource("GDScript_htvv1")
+bullet_scene = ExtResource("4_dt7d3")
+
+[node name="States" type="Node" parent="."]
+
+[node name="Idle" type="Node" parent="States"]
+script = ExtResource("3_xchkn")
+
+[node name="Chasing" type="Node" parent="States"]
+script = ExtResource("4_e3usk")
+
+[node name="DetectionRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+visible = false
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_qjgd1")
+
+[node name="Area2D" type="Area2D" parent="." groups=["enemy_collider"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(9, 63)
+shape = SubResource("CapsuleShape2D_fadb5")

@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8af7h2s6jjfr"]
+
+[sub_resource type="GDScript" id="GDScript_x522m"]
+script/source = "extends Node2D
+
+@onready var spider = preload(\"res://actors/enemies/Spider/spider_enemy.tscn\")
+
+func inst(pos: Vector2):
+	var instance = spider.instantiate()
+	instance.position = pos
+
+	# Initialize the state machine and set the target
+	if instance.has_method(\"initialize\"):
+		instance.initialize()  # Call initialize to set up states
+
+	# Get the player node at spawn time
+	var player = get_tree().get_root().get_node(\"Main/Player\")
+	
+	# Set the target for the instantiated spider
+	if instance.has_method(\"set_target\"):
+		instance.set_target(player)
+
+	add_child(instance)
+
+func _on_timer_timeout() -> void:
+	inst(Vector2(0, 0))  # Adjust the spawn position as needed
+"
+
+[node name="Spawner" type="Node2D"]
+script = SubResource("GDScript_x522m")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="ready" from="Timer" to="." method="_on_timer_ready"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

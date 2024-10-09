@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://d3lp7ixxqsg4b"]
+
+[ext_resource type="Script" path="res://actors/projectile/Sawprojectile.gd" id="1_ko8xl"]
+[ext_resource type="Texture2D" uid="uid://tltt46nik02y" path="res://environment/Saw sprite.png" id="2_t1o6w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe4pw"]
+atlas = ExtResource("2_t1o6w")
+region = Rect2(0, 0, 121, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfrwr"]
+atlas = ExtResource("2_t1o6w")
+region = Rect2(130, 0, 121, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7upj"]
+atlas = ExtResource("2_t1o6w")
+region = Rect2(260, 0, 121, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gq88j"]
+atlas = ExtResource("2_t1o6w")
+region = Rect2(390, 0, 121, 124)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wl1i3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe4pw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nfrwr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7upj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gq88j")
+}],
+"loop": true,
+"name": &"SawSpin",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qbs76"]
+radius = 4.14915
+
+[node name="SawProjectile" type="Area2D"]
+scale = Vector2(1.2, 1.2)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_ko8xl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 2
+texture_filter = 1
+position = Vector2(-1, 3.8147e-06)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_wl1i3")
+animation = &"SawSpin"
+frame_progress = 0.0992063
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(5.515, 5.515)
+shape = SubResource("CircleShape2D_qbs76")
+
+[node name="TimeToLive" type="Timer" parent="."]
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="TimeToLive" to="." method="_on_time_to_live_timeout"]

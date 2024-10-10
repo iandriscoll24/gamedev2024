@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var bow_sprite = $MainSprite/Bow
 @onready var animation_player = $MainSprite/AnimationPlayer
 @export var health: int = 5  # Health variable
+@onready var bowshot = $bowshot
 var button_hold_time = 0.0
 var button_hold_threshold = 1.0  # 1 second threshold
 
@@ -20,8 +21,14 @@ func _input(event):
 				var new_projectile = projectile_scene.instantiate()
 				get_parent().add_child(new_projectile)
 				
-				# Pass the bow's position and calculate direction toward the mouse
-				new_projectile.fire(bow_sprite.global_position, 1000.0)
+				# Get the mouse position and calculate direction
+				var mouse_position = get_global_mouse_position()
+				var direction = (mouse_position - bow_sprite.global_position).normalized()
+				
+				# Fire the projectile
+				new_projectile.fire(bow_sprite.global_position, direction, 1000.0)
+				bowshot.play()
+
 
 		# Right Click Fire Event
 		if (event.button_index == 2 and event.is_pressed()):
@@ -39,7 +46,8 @@ func _input(event):
 
 				for i in range(num_projectiles):
 					var angle_offset = start_angle + (spread_angle / (num_projectiles - 1)) * i
-					
+					var mouse_position = get_global_mouse_position()
+					var direction = (mouse_position - bow_sprite.global_position).normalized()
 					# Calculate the direction based on the current angle offset
 					var rotated_direction = bow_sprite.global_position.direction_to(get_viewport().get_mouse_position()).rotated(deg_to_rad(angle_offset))
 
@@ -48,7 +56,7 @@ func _input(event):
 					get_parent().add_child(new_projectile)
 
 					# Fire the projectile in the rotated direction (spread shot)
-					new_projectile.fire(bow_sprite.global_position, 1000.0)
+					new_projectile.fire(bow_sprite.global_position, direction, 1000.0)
 					new_projectile.velocity = rotated_direction * 1000.0
 
 

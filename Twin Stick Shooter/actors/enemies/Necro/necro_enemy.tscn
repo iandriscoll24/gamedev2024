@@ -1,10 +1,11 @@
 [gd_scene load_steps=14 format=3 uid="uid://cn1pb406olcs5"]
 
-[ext_resource type="Script" path="res://actors/enemies/Slime/basic_enemy.gd" id="1_yqvo5"]
+[ext_resource type="Script" path="res://actors/enemies/Necro/necro_enemy.gd" id="1_d5nxe"]
 [ext_resource type="Texture2D" uid="uid://d3vyj4f1ba5ro" path="res://actors/enemies/Necro/Necromancer_creativekind-Sheet.png" id="2_h5iee"]
+[ext_resource type="Script" path="res://actors/enemies/Necro/bullet_spawner.gd" id="3_b0otu"]
 [ext_resource type="Script" path="res://actors/enemies/Necro/necro_idle.gd" id="3_xchkn"]
-[ext_resource type="PackedScene" uid="uid://bw2hclbrwmhi4" path="res://actors/enemies/Necro/bullet.tscn" id="4_dt7d3"]
 [ext_resource type="Script" path="res://actors/enemies/Necro/necro_chasing.gd" id="4_e3usk"]
+[ext_resource type="AudioStream" uid="uid://llr0jlrtk7rh" path="res://audio/hit.mp3" id="6_5aa5w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nw20k"]
 size = Vector2(75, 92)
@@ -65,36 +66,6 @@ _data = {
 "move_necro": SubResource("Animation_sgpve")
 }
 
-[sub_resource type="GDScript" id="GDScript_htvv1"]
-script/source = "extends Node2D  # or whatever type is appropriate
-
-@export var bullet_scene: PackedScene  # Assign your bullet scene in the inspector
-var shoot_timer: Timer
-
-func _ready():
-	# Create and configure the timer
-	shoot_timer = Timer.new()
-	shoot_timer.wait_time = 1.0  # Adjust the wait time for how often to shoot
-	shoot_timer.one_shot = false  # Set to true if you want it to shoot only once
-	add_child(shoot_timer)  # Add the timer to the scene tree
-	shoot_timer.start()  # Start the timer
-
-func _process(delta: float) -> void:
-	if shoot_timer.is_stopped() == false:  # Check if the timer is running
-		# Check if the timer has elapsed
-		if shoot_timer.time_left <= 0:
-			_on_shoot_timer_timeout()  # Call the shoot function
-			shoot_timer.start()  # Restart the timer
-
-func _on_shoot_timer_timeout():
-	if bullet_scene:  # Ensure bullet_scene is assigned
-		var bullet = bullet_scene.instantiate()
-		bullet.position = position  # Set bullet's position to the spawner's position
-		get_parent().add_child(bullet)  # Add the bullet to the parent
-	else:
-		print(\"Bullet scene is not assigned.\")
-"
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_qjgd1"]
 radius = 89.1067
 
@@ -102,10 +73,10 @@ radius = 89.1067
 radius = 45.0
 height = 110.0
 
-[node name="BasicEnemy" type="CharacterBody2D" node_paths=PackedStringArray("initial_state") groups=["EnemyDie", "enemies"]]
+[node name="BasicEnemy" type="CharacterBody2D" node_paths=PackedStringArray("initial_state") groups=["EnemyDie", "enemies", "enemy_collider"]]
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_yqvo5")
+script = ExtResource("1_d5nxe")
 initial_state = NodePath("States/Idle")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -128,9 +99,13 @@ libraries = {
 speed_scale = 0.3
 
 [node name="BulletSpawner" type="Node2D" parent="."]
-position = Vector2(34.935, 33.3)
-script = SubResource("GDScript_htvv1")
-bullet_scene = ExtResource("4_dt7d3")
+position = Vector2(37.03, 31.405)
+script = ExtResource("3_b0otu")
+
+[node name="ShootTimer" type="Timer" parent="BulletSpawner"]
+
+[node name="Rotater" type="Node2D" parent="BulletSpawner"]
+position = Vector2(0.625, 0.085)
 
 [node name="States" type="Node" parent="."]
 
@@ -153,3 +128,9 @@ shape = SubResource("CircleShape2D_qjgd1")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(9, 63)
 shape = SubResource("CapsuleShape2D_fadb5")
+
+[node name="hitsound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_5aa5w")
+pitch_scale = 1.99
+
+[connection signal="timeout" from="BulletSpawner/ShootTimer" to="BulletSpawner" method="_on_shoot_timer_timeout"]

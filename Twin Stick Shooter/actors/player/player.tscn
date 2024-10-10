@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cxhmbcu2y6onb"]
+[gd_scene load_steps=15 format=3 uid="uid://cxhmbcu2y6onb"]
 
 [ext_resource type="Script" path="res://actors/player/player.gd" id="1_hxo5q"]
 [ext_resource type="PackedScene" uid="uid://cpjjhmw4gdy70" path="res://actors/projectile/projectile.tscn" id="2_d25ch"]
 [ext_resource type="Texture2D" uid="uid://cbu401dduweec" path="res://actors/player/player.png" id="3_4va7y"]
 [ext_resource type="Texture2D" uid="uid://x5bqh50mrgld" path="res://actors/player/Bow01.png" id="4_kjol6"]
+[ext_resource type="AudioStream" uid="uid://b8vnag0325uxj" path="res://audio/bowshot.mp3" id="5_r1rsj"]
 
 [sub_resource type="Animation" id="Animation_a7gek"]
 resource_name = "Idle"
@@ -160,5 +161,8 @@ shape = SubResource("RectangleShape2D_5wg87")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 12)
 shape = SubResource("CapsuleShape2D_lqasb")
+
+[node name="bowshot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_r1rsj")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

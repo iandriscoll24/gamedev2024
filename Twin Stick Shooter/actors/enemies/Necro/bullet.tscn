@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bw2hclbrwmhi4"]
+[gd_scene load_steps=7 format=3 uid="uid://bw2hclbrwmhi4"]
 
+[ext_resource type="Script" path="res://actors/enemies/Necro/bullet.gd" id="1_arncr"]
 [ext_resource type="Texture2D" uid="uid://qmm1brgimvd" path="res://actors/enemies/Necro/fireballSpritesheet.png" id="1_iybq2"]
 
 [sub_resource type="Animation" id="Animation_ms3nl"]
@@ -43,7 +44,9 @@ _data = {
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1j251"]
 radius = 8.75
 
-[node name="bullet" type="Area2D"]
+[node name="bullet" type="Area2D" groups=["enemy_collider"]]
+z_index = 1
+script = ExtResource("1_arncr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = -1.5708
@@ -61,3 +64,10 @@ position = Vector2(1, 1)
 rotation = -1.5708
 scale = Vector2(0.8, 0.8)
 shape = SubResource("CapsuleShape2D_1j251")
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]

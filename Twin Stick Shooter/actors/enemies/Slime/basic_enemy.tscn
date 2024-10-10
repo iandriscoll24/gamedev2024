@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0uc25h4u0wbw"]
+[gd_scene load_steps=12 format=3 uid="uid://c0uc25h4u0wbw"]
 
 [ext_resource type="Script" path="res://actors/enemies/Slime/basic_enemy.gd" id="1_rwvc6"]
 [ext_resource type="Script" path="res://actors/enemies/Slime/idle.gd" id="2_fv812"]
 [ext_resource type="Texture2D" uid="uid://t1ekryfas4b3" path="res://slime.png" id="2_ysatt"]
 [ext_resource type="Script" path="res://actors/enemies/Slime/chasing.gd" id="3_8yy8p"]
+[ext_resource type="AudioStream" uid="uid://llr0jlrtk7rh" path="res://audio/hit.mp3" id="5_518lh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nw20k"]
 size = Vector2(37, 19)
@@ -108,3 +109,7 @@ shape = SubResource("CircleShape2D_qjgd1")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0.5, 5.5)
 shape = SubResource("RectangleShape2D_nw20k")
+
+[node name="hitsound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_518lh")
+pitch_scale = 1.99

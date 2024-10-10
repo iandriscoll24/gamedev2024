@@ -1,7 +1,7 @@
 extends CharacterStateMachine
-class_name Enemy
+class_name Necro
 
-@export var hp: int = 3
+@export var hp: int = 20
 @onready var hitsound = $hitsound
 
 func hit(damage_number: int):

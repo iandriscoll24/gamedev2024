@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://diju0jj6ctlh6"]
+
+[ext_resource type="Script" path="res://bubble.gd" id="1_jssng"]
+[ext_resource type="Texture2D" uid="uid://de2ahml2fiy4n" path="res://Assets/Bubble Sprite.png" id="2_a7nyl"]
+[ext_resource type="AudioStream" uid="uid://1x581yhe51sh" path="res://Assets/bubblepop.mp3" id="3_sueoc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r80wy"]
+
+[sub_resource type="Animation" id="Animation_wok5x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nmqix"]
+resource_name = "bubble_move"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5rffc"]
+resource_name = "bubble_pop"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1), Vector2i(5, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_glknq"]
+_data = {
+"RESET": SubResource("Animation_wok5x"),
+"bubble_move": SubResource("Animation_nmqix"),
+"bubble_pop": SubResource("Animation_5rffc")
+}
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_jssng")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2.5, 2.5)
+shape = SubResource("CircleShape2D_r80wy")
+
+[node name="BubbleSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1, 0)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_a7nyl")
+hframes = 6
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BubbleSprite"]
+libraries = {
+"": SubResource("AnimationLibrary_glknq")
+}
+
+[node name="bubblepop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_sueoc")
+volume_db = 15.0
+
+[connection signal="animation_finished" from="BubbleSprite/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

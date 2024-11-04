@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=3 uid="uid://dxcd8vbuoqbxq"]
+
+[ext_resource type="Script" path="res://frog.gd" id="1_ci5i2"]
+[ext_resource type="Texture2D" uid="uid://d1kywl21dvv73" path="res://Assets/frog_spritesheet.png" id="2_365f0"]
+[ext_resource type="AudioStream" uid="uid://dg2idmhnrcwdm" path="res://Assets/FrogCroak.mp3" id="3_c0a24"]
+
+[sub_resource type="Animation" id="Animation_vqnbt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_vmjpq"]
+resource_name = "frog_idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(2, 0), Vector2i(4, 0), Vector2i(6, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5jjtb"]
+resource_name = "frog_jump_right"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333, 0.666667, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 1), Vector2i(2, 1), Vector2i(4, 1), Vector2i(6, 1), Vector2i(8, 1), Vector2i(10, 1), Vector2i(12, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a1fog"]
+_data = {
+"RESET": SubResource("Animation_vqnbt"),
+"frog_idle": SubResource("Animation_vmjpq"),
+"frog_jump_right": SubResource("Animation_5jjtb")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jixxi"]
+size = Vector2(54, 41)
+
+[node name="frogRigid" type="RigidBody2D"]
+gravity_scale = 0.8
+lock_rotation = true
+script = ExtResource("1_ci5i2")
+
+[node name="frogSprite" type="Sprite2D" parent="."]
+z_index = 10
+texture_filter = 1
+position = Vector2(-5, -5)
+scale = Vector2(3.15625, 3.15625)
+texture = ExtResource("2_365f0")
+hframes = 14
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="frogSprite"]
+libraries = {
+"": SubResource("AnimationLibrary_a1fog")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 1.5)
+shape = SubResource("RectangleShape2D_jixxi")
+
+[node name="FrogCroak" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_c0a24")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

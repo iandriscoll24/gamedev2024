@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b5qhlw4gfycli"
+path="res://.godot/imported/Underwater Blues (Royalty Free Game Music).mp3-a5621577e28213d1cd3e3fdafd7c43f6.mp3str"
+
+[deps]
+
+source_file="res://Assets/Underwater Blues (Royalty Free Game Music).mp3"
+dest_files=["res://.godot/imported/Underwater Blues (Royalty Free Game Music).mp3-a5621577e28213d1cd3e3fdafd7c43f6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

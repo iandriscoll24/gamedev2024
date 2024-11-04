@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv1ttc0p675dc"]
+
+[ext_resource type="Script" path="res://air_meter.gd" id="1_hnxi3"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_7ypdk"]
+
+[node name="AirMeter" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hnxi3")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.597176, 0.597176, 0.597176, 1)
+layout_mode = 0
+offset_left = 44.0
+offset_top = 43.0
+offset_right = 84.0
+offset_bottom = 83.0
+scale = Vector2(17.3978, 0.926214)
+texture = SubResource("CanvasTexture_7ypdk")
+
+[node name="Foreground" type="TextureRect" parent="."]
+modulate = Color(0, 0.721127, 0.849741, 1)
+layout_mode = 0
+offset_left = 44.0
+offset_top = 47.0
+offset_right = 84.0
+offset_bottom = 78.0
+scale = Vector2(17.3978, 0.926214)
+texture = SubResource("CanvasTexture_7ypdk")

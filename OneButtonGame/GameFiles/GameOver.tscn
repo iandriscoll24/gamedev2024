@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://c6dp7c2ps63hw"]
+
+[ext_resource type="Script" path="res://game_over.gd" id="1_opgm2"]
+[ext_resource type="Texture2D" uid="uid://bfx7yvxo0jty4" path="res://Assets/FloorSprite.png" id="1_qqg0p"]
+[ext_resource type="Texture2D" uid="uid://bo746ti3du0t5" path="res://Assets/BackgroundLake.png" id="2_4fn5o"]
+[ext_resource type="AudioStream" uid="uid://b6khbd033a3vh" path="res://Assets/Underwater Ambience Sound  Royalty Free Gaming Music.mp3" id="3_tl7mh"]
+[ext_resource type="PackedScene" uid="uid://bay2luelhkqhd" path="res://LilyPad.tscn" id="4_50ppo"]
+[ext_resource type="PackedScene" uid="uid://gyl1tywiwigv" path="res://LilyPadAlt.tscn" id="5_opwga"]
+[ext_resource type="Texture2D" uid="uid://dhjhs4c6uj5w0" path="res://Assets/GAME-OVER-11-4-2024.png" id="6_nux2w"]
+[ext_resource type="AudioStream" uid="uid://dg2idmhnrcwdm" path="res://Assets/FrogCroak.mp3" id="7_xnvm7"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_opgm2")
+
+[node name="FloorSprite" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+position = Vector2(959.5, 978)
+scale = Vector2(1.775, 1)
+texture = ExtResource("1_qqg0p")
+
+[node name="BackgroundLake" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(959, 540)
+texture = ExtResource("2_4fn5o")
+
+[node name="AmbienceAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_tl7mh")
+volume_db = 10.0
+autoplay = true
+parameters/looping = true
+
+[node name="LilyPadBody" parent="." instance=ExtResource("4_50ppo")]
+position = Vector2(427, 862)
+scale = Vector2(4, 4)
+
+[node name="LilyPadBody2" parent="." instance=ExtResource("4_50ppo")]
+position = Vector2(1404, 719)
+scale = Vector2(7, 7)
+
+[node name="LilyPadBodyAlt" parent="." instance=ExtResource("5_opwga")]
+position = Vector2(709, 917)
+scale = Vector2(3, 3)
+
+[node name="LilyPadBodyAlt2" parent="." instance=ExtResource("5_opwga")]
+position = Vector2(191, 765)
+scale = Vector2(6, 6)
+
+[node name="LilyPadBodyAlt3" parent="." instance=ExtResource("5_opwga")]
+position = Vector2(1713, 519)
+scale = Vector2(9, 11)
+
+[node name="LilyPadBodyAlt4" parent="." instance=ExtResource("5_opwga")]
+position = Vector2(1129, 821)
+scale = Vector2(5, 5)
+
+[node name="Game-over-11-4-2024" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("6_nux2w")
+
+[node name="FrogCroak" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_xnvm7")
+volume_db = 5.0
+autoplay = true

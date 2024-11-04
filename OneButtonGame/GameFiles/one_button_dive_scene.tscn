@@ -1,0 +1,170 @@
+[gd_scene load_steps=17 format=3 uid="uid://dh4qjbw73lwfi"]
+
+[ext_resource type="PackedScene" uid="uid://dxcd8vbuoqbxq" path="res://frog.tscn" id="1_ox2nt"]
+[ext_resource type="PackedScene" uid="uid://diju0jj6ctlh6" path="res://bubble.tscn" id="2_jby6b"]
+[ext_resource type="PackedScene" uid="uid://c68hc41nne310" path="res://Floor Border.tscn" id="3_ry7ss"]
+[ext_resource type="Script" path="res://bubble_spawner.gd" id="4_xeg45"]
+[ext_resource type="PackedScene" uid="uid://bay2luelhkqhd" path="res://LilyPad.tscn" id="5_3hgm3"]
+[ext_resource type="PackedScene" uid="uid://gyl1tywiwigv" path="res://LilyPadAlt.tscn" id="6_ylv67"]
+[ext_resource type="PackedScene" uid="uid://bv1ttc0p675dc" path="res://air_meter.tscn" id="7_art8i"]
+[ext_resource type="PackedScene" uid="uid://doquonm0xn15b" path="res://fishspawner.tscn" id="8_s1a1e"]
+[ext_resource type="PackedScene" uid="uid://cgywbxm21ioiu" path="res://fish.tscn" id="9_yra13"]
+[ext_resource type="Texture2D" uid="uid://buk70fqeb5q48" path="res://AIR-11-3-2024.png" id="10_a0fod"]
+[ext_resource type="Script" path="res://timer_on_screen.gd" id="11_qs3af"]
+[ext_resource type="Texture2D" uid="uid://bcspclfik04ko" path="res://Assets/TIME-11-4-2024.png" id="12_eyvax"]
+[ext_resource type="Texture2D" uid="uid://bfx7yvxo0jty4" path="res://Assets/FloorSprite.png" id="13_f2kca"]
+[ext_resource type="Texture2D" uid="uid://bo746ti3du0t5" path="res://Assets/BackgroundLake.png" id="14_8wps0"]
+[ext_resource type="AudioStream" uid="uid://b5qhlw4gfycli" path="res://Assets/Underwater Blues (Royalty Free Game Music).mp3" id="15_b2phr"]
+[ext_resource type="AudioStream" uid="uid://b6khbd033a3vh" path="res://Assets/Underwater Ambience Sound  Royalty Free Gaming Music.mp3" id="15_s26jf"]
+
+[node name="OneButtonDiveScene" type="Node2D"]
+
+[node name="Area2D" parent="." instance=ExtResource("2_jby6b")]
+position = Vector2(1122, 922)
+
+[node name="Node2D" parent="." instance=ExtResource("3_ry7ss")]
+position = Vector2(916, 1067)
+scale = Vector2(2, 1)
+
+[node name="BubbleSpawner" type="Node2D" parent="."]
+position = Vector2(923, 1026)
+script = ExtResource("4_xeg45")
+
+[node name="bubblespawntimer" type="Timer" parent="BubbleSpawner"]
+wait_time = 2.0
+autostart = true
+
+[node name="BubbleSpawner2" type="Node2D" parent="."]
+position = Vector2(923, 1026)
+script = ExtResource("4_xeg45")
+
+[node name="bubblespawntimer" type="Timer" parent="BubbleSpawner2"]
+wait_time = 2.0
+autostart = true
+
+[node name="BubbleSpawner3" type="Node2D" parent="."]
+position = Vector2(920, 1029)
+script = ExtResource("4_xeg45")
+
+[node name="bubblespawntimer" type="Timer" parent="BubbleSpawner3"]
+wait_time = 2.0
+autostart = true
+
+[node name="LilyPadBody" parent="." instance=ExtResource("5_3hgm3")]
+position = Vector2(427, 862)
+scale = Vector2(4, 4)
+
+[node name="LilyPadBody2" parent="." instance=ExtResource("5_3hgm3")]
+position = Vector2(1404, 719)
+scale = Vector2(7, 7)
+
+[node name="LilyPadBodyAlt" parent="." instance=ExtResource("6_ylv67")]
+position = Vector2(709, 917)
+scale = Vector2(3, 3)
+
+[node name="LilyPadBodyAlt2" parent="." instance=ExtResource("6_ylv67")]
+position = Vector2(191, 765)
+scale = Vector2(6, 6)
+
+[node name="LilyPadBodyAlt3" parent="." instance=ExtResource("6_ylv67")]
+position = Vector2(1713, 519)
+scale = Vector2(9, 11)
+
+[node name="LilyPadBodyAlt4" parent="." instance=ExtResource("6_ylv67")]
+position = Vector2(1129, 821)
+scale = Vector2(5, 5)
+
+[node name="AirMeter" parent="." instance=ExtResource("7_art8i")]
+offset_left = 51.0
+offset_top = 18.0
+offset_right = 91.0
+offset_bottom = 58.0
+metadata/_edit_use_anchors_ = true
+
+[node name="BubbleSpawner4" type="Node2D" parent="."]
+position = Vector2(1846, 2052)
+script = ExtResource("4_xeg45")
+
+[node name="bubblespawntimer" type="Timer" parent="BubbleSpawner4"]
+wait_time = 2.0
+autostart = true
+
+[node name="BubbleSpawner5" type="Node2D" parent="."]
+position = Vector2(923, 1026)
+script = ExtResource("4_xeg45")
+
+[node name="bubblespawntimer" type="Timer" parent="BubbleSpawner5"]
+wait_time = 2.0
+autostart = true
+
+[node name="frogRigid" parent="." instance=ExtResource("1_ox2nt")]
+position = Vector2(923, 675)
+
+[node name="fishspawnerNode2D" parent="." instance=ExtResource("8_s1a1e")]
+position = Vector2(553, 632)
+fish_scene = ExtResource("9_yra13")
+
+[node name="FishArea2D" parent="." instance=ExtResource("9_yra13")]
+position = Vector2(630, 484)
+
+[node name="AirText" type="Sprite2D" parent="."]
+position = Vector2(153, 33)
+scale = Vector2(0.121985, 0.121985)
+texture = ExtResource("10_a0fod")
+
+[node name="TimerOnScreen" type="Label" parent="."]
+z_index = 6
+offset_left = 1731.0
+offset_top = 72.0
+offset_right = 1771.0
+offset_bottom = 168.0
+theme_override_font_sizes/font_size = 70
+script = ExtResource("11_qs3af")
+metadata/_edit_use_anchors_ = true
+
+[node name="Time-11-4-2024" type="Sprite2D" parent="."]
+position = Vector2(1749, 39)
+scale = Vector2(0.170918, 0.170918)
+texture = ExtResource("12_eyvax")
+
+[node name="FloorSprite" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+position = Vector2(959.5, 978)
+scale = Vector2(1.775, 1)
+texture = ExtResource("13_f2kca")
+
+[node name="BackgroundLake" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(959, 540)
+texture = ExtResource("14_8wps0")
+
+[node name="AmbienceAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_s26jf")
+volume_db = 10.0
+autoplay = true
+parameters/looping = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_b2phr")
+autoplay = true
+parameters/looping = true
+
+[node name="Node2D2" parent="." instance=ExtResource("3_ry7ss")]
+position = Vector2(6, 512)
+rotation = 1.5708
+
+[node name="Node2D3" parent="." instance=ExtResource("3_ry7ss")]
+position = Vector2(1051, 2)
+rotation = 3.14159
+scale = Vector2(2, 1)
+
+[node name="Node2D4" parent="." instance=ExtResource("3_ry7ss")]
+position = Vector2(1911, 531)
+rotation = 4.71239
+
+[connection signal="timeout" from="BubbleSpawner/bubblespawntimer" to="BubbleSpawner" method="_on_bubblespawntimer_timeout"]
+[connection signal="timeout" from="BubbleSpawner2/bubblespawntimer" to="BubbleSpawner2" method="_on_bubblespawntimer_timeout"]
+[connection signal="timeout" from="BubbleSpawner3/bubblespawntimer" to="BubbleSpawner3" method="_on_bubblespawntimer_timeout"]
+[connection signal="timeout" from="BubbleSpawner4/bubblespawntimer" to="BubbleSpawner4" method="_on_bubblespawntimer_timeout"]
+[connection signal="timeout" from="BubbleSpawner5/bubblespawntimer" to="BubbleSpawner5" method="_on_bubblespawntimer_timeout"]

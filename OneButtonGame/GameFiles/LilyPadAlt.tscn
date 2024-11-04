@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://gyl1tywiwigv"]
+
+[ext_resource type="Texture2D" uid="uid://bq450dowtn3dh" path="res://Assets/LilyPad.png" id="1_hpx2w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5g65e"]
+size = Vector2(29, 14)
+
+[node name="LilyPadBodyAlt" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_hpx2w")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -7)
+shape = SubResource("RectangleShape2D_5g65e")
+one_way_collision = true

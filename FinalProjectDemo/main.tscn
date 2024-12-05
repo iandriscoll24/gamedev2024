@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://ew2l7xve243r"]
+
+[ext_resource type="PackedScene" uid="uid://dj4qt1r66hdfx" path="res://player.tscn" id="1_mkbot"]
+[ext_resource type="PackedScene" uid="uid://bv3pkys55vqgy" path="res://floor.tscn" id="2_kq3ct"]
+[ext_resource type="PackedScene" uid="uid://8lx8q8g30i7d" path="res://movingplatform.tscn" id="3_ia3s0"]
+[ext_resource type="PackedScene" uid="uid://c2uu5p2g3y0qj" path="res://Booster.tscn" id="4_3rxyd"]
+[ext_resource type="Texture2D" uid="uid://c25tqytwq7hwi" path="res://BG Temp.png" id="5_x271o"]
+
+[sub_resource type="Curve2D" id="Curve2D_tueue"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 185, -2, 0, 0, 0, 0, 746, -8)
+}
+point_count = 2
+
+[node name="Main" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_mkbot")]
+position = Vector2(59, 596)
+
+[node name="StaticBody2D" parent="." instance=ExtResource("2_kq3ct")]
+position = Vector2(1, 1)
+
+[node name="Path2D" parent="." instance=ExtResource("3_ia3s0")]
+position = Vector2(215, 722)
+curve = SubResource("Curve2D_tueue")
+loop = false
+
+[node name="Path2D2" parent="." instance=ExtResource("3_ia3s0")]
+position = Vector2(846, 501)
+
+[node name="Path2D3" parent="." instance=ExtResource("3_ia3s0")]
+position = Vector2(252, 280)
+
+[node name="Path2D4" parent="." instance=ExtResource("3_ia3s0")]
+position = Vector2(1147, 109)
+
+[node name="Path2D5" parent="." instance=ExtResource("3_ia3s0")]
+position = Vector2(279, -136)
+
+[node name="Area2D" parent="." instance=ExtResource("4_3rxyd")]
+z_index = -1
+position = Vector2(1493, 883)
+boost_strength = 2000.0
+
+[node name="BgTemp" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(1014, 521)
+texture = ExtResource("5_x271o")

@@ -1,0 +1,905 @@
+[gd_scene load_steps=41 format=4 uid="uid://ew2l7xve243r"]
+
+[ext_resource type="PackedScene" uid="uid://dj4qt1r66hdfx" path="res://player.tscn" id="1_mkbot"]
+[ext_resource type="PackedScene" uid="uid://bv3pkys55vqgy" path="res://floor.tscn" id="2_kq3ct"]
+[ext_resource type="PackedScene" uid="uid://c2uu5p2g3y0qj" path="res://Booster.tscn" id="4_3rxyd"]
+[ext_resource type="PackedScene" uid="uid://bpxpwxytx5e2t" path="res://testingplatforms.tscn" id="5_8m1xj"]
+[ext_resource type="Texture2D" uid="uid://c25tqytwq7hwi" path="res://BG Temp.png" id="5_x271o"]
+[ext_resource type="Texture2D" uid="uid://y7805eaeam62" path="res://DeepBG-export.png" id="7_1vkpe"]
+[ext_resource type="Texture2D" uid="uid://ovykhyaw4q5h" path="res://Glow Circle.png" id="8_ctv0i"]
+[ext_resource type="Texture2D" uid="uid://f5lkfd7hv105" path="res://4ahq7er3f5h01.png" id="9_4d8ma"]
+[ext_resource type="Shader" path="res://water.gdshader" id="10_ne41a"]
+[ext_resource type="Texture2D" uid="uid://hjvlvbllihu5" path="res://icon.svg" id="11_s56um"]
+[ext_resource type="PackedScene" uid="uid://ddotig01ic47g" path="res://static platforms.tscn" id="12_d474r"]
+[ext_resource type="Texture2D" uid="uid://xhhps7a3ktif" path="res://Shallows Sprite.png" id="13_jmn75"]
+[ext_resource type="Texture2D" uid="uid://ciaaqcv82mi70" path="res://Tile Set test.png" id="13_ua1po"]
+[ext_resource type="Texture2D" uid="uid://cbb8ydprgnsn6" path="res://Rocks Foreground.png" id="14_hslv0"]
+[ext_resource type="PackedScene" uid="uid://b7on1aaqnk6ya" path="res://sand static platform.tscn" id="16_t83b8"]
+[ext_resource type="PackedScene" uid="uid://c88wn5noljcxx" path="res://JellyNPC.tscn" id="17_i1h2j"]
+[ext_resource type="PackedScene" uid="uid://b2kkfsorraoxx" path="res://Falling Sand Platform.tscn" id="18_0p537"]
+[ext_resource type="PackedScene" uid="uid://dibkyomvbacsw" path="res://Falling Sand Platform2.tscn" id="19_uatct"]
+[ext_resource type="PackedScene" uid="uid://i4ugcj7oxorn" path="res://static platform stone.tscn" id="20_8kmef"]
+[ext_resource type="PackedScene" uid="uid://c6uqktob823px" path="res://testingplatformstone.tscn" id="22_pp330"]
+[ext_resource type="Texture2D" uid="uid://xkvd3k6kutcr" path="res://cd1d10b6d98ddb8fce79fbba10dd5e30.jpg" id="23_s5846"]
+[ext_resource type="PackedScene" uid="uid://ofmqrqwxgcyv" path="res://JellyNPC2.tscn" id="24_2govh"]
+[ext_resource type="Texture2D" uid="uid://4gn40ovc288" path="res://Rocks Foreground 2.png" id="25_iwdj8"]
+[ext_resource type="PackedScene" uid="uid://bravtxi4mx5xk" path="res://Crabs.tscn" id="25_smul2"]
+[ext_resource type="PackedScene" uid="uid://bphnrhe87co6c" path="res://Moving Platform stone.tscn" id="26_a2h6u"]
+[ext_resource type="Script" path="res://restart.gd" id="26_sm777"]
+
+[sub_resource type="Environment" id="Environment_6hml8"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.3
+glow_blend_mode = 1
+glow_hdr_threshold = 1.2
+fog_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_f16ds"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rgjma"]
+gradient = SubResource("Gradient_f16ds")
+fill_from = Vector2(0.37156, 0.105505)
+fill_to = Vector2(0.362385, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6e02c"]
+noise_type = 2
+frequency = 0.008
+fractal_type = 2
+fractal_gain = 0.9
+fractal_weighted_strength = 0.72
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pj5c2"]
+seamless = true
+seamless_blend_skirt = 0.6
+noise = SubResource("FastNoiseLite_6e02c")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7l3jr"]
+shader = ExtResource("10_ne41a")
+shader_parameter/color = Color(0.30429, 0.850447, 0.999999, 1)
+shader_parameter/speed = Vector2(0.01, 0.01)
+shader_parameter/wave_strength = 2.0
+shader_parameter/fast_noise = SubResource("NoiseTexture2D_pj5c2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q6ear"]
+noise_type = 2
+frequency = 0.008
+fractal_type = 2
+fractal_gain = 0.9
+fractal_weighted_strength = 0.72
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3agsn"]
+seamless = true
+seamless_blend_skirt = 0.6
+noise = SubResource("FastNoiseLite_q6ear")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kgyae"]
+shader = ExtResource("10_ne41a")
+shader_parameter/color = Color(1, 0.96375, 0.601673, 1)
+shader_parameter/speed = Vector2(0.01, 0.01)
+shader_parameter/wave_strength = 1.0
+shader_parameter/fast_noise = SubResource("NoiseTexture2D_3agsn")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gdijj"]
+texture = ExtResource("13_ua1po")
+8:9/0 = 0
+8:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:9/0 = 0
+9:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+10:9/0 = 0
+10:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:9/0 = 0
+11:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:9/0 = 0
+12:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:10/0 = 0
+8:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:10/0 = 0
+9:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+10:10/0 = 0
+10:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:10/0 = 0
+11:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:10/0 = 0
+12:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:11/0 = 0
+8:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:11/0 = 0
+9:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+10:11/0 = 0
+10:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:11/0 = 0
+11:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:11/0 = 0
+12:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:12/0 = 0
+8:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:12/0 = 0
+9:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+10:12/0 = 0
+10:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_iyk7s"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_gdijj")
+
+[sub_resource type="Curve2D" id="Curve2D_8ibf6"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 633.333, -40.6666, 0, 0, 0, 0, 105, -43.3333, 0, 0, 0, 0, 642.5, -40.6666)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_afhy0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -298.333, -4, 0, 0, 0, 0, 180, -4, 0, 0, 0, 0, -314.167, -4)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_63wyk"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 173, -2, 0, 0, 0, 0, 173, -857, 0, 0, 0, 0, 172, 3)
+}
+point_count = 3
+
+[node name="Main" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6hml8")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_mkbot")]
+modulate = Color(1.5, 1.5, 1.5, 1)
+position = Vector2(113, 1037)
+platform_on_leave = 2
+
+[node name="Area2D" parent="." instance=ExtResource("4_3rxyd")]
+z_index = 2
+position = Vector2(1749, 965)
+scale = Vector2(0.75, 0.75)
+
+[node name="BgTemp" type="Sprite2D" parent="."]
+visible = false
+z_index = -5
+position = Vector2(1014, 584.5)
+scale = Vector2(1, 0.902006)
+texture = ExtResource("5_x271o")
+
+[node name="Path2D4" parent="." instance=ExtResource("5_8m1xj")]
+position = Vector2(-11.9999, -81)
+scale = Vector2(1, 0.902006)
+
+[node name="DeepBg-export" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+position = Vector2(1013.37, 796)
+scale = Vector2(2.65714, 2.65714)
+texture = ExtResource("7_1vkpe")
+metadata/_edit_lock_ = true
+
+[node name="Glowbulb40" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1055, 570)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb40"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(5, 1.99999)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(5, 1.99999)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb2" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Glowbulb3" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Glowbulb4" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Glowbulb6" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb6"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(36, 142)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb7" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb7"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(110, 129)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb8" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb8"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(269, 19)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb9" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb9"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(328, 78)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb10" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb10"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(402, 31)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb11" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb11"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(493, 39)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb12" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb12"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(542, 126)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb13" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb13"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(629, 51)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb14" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb14"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(780, 172)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb15" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb15"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(956, 45)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb16" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb16"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1040, 149)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb17" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb17"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1077, 318)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb18" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb18"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1136, 238)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb19" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb19"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1198, 281)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb20" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb20"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1208, 106)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb21" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb21"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1261, 53)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb22" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb22"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1413, 87)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb23" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb23"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1342, 189)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb24" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb24"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1417, 240)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb25" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb25"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1505, 277)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb26" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb26"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1461, 125)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb27" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb27"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1551, 161)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb28" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Glowbulb29" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb29"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1607, 268)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb30" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Glowbulb31" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb31"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1797, 90)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb32" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Glowbulb33" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb33"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1876, 13)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb34" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb34"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1823, 235)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb35" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb35"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1882, 142)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb36" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb36"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1931, 152)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb37" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb37"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1858, 357)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb38" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb38"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1951, 334)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb39" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(166, 451)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb39"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(1974, 252)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="Glowbulb41" type="Node2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(985, 535)
+
+[node name="Sprite2D" type="Sprite2D" parent="Glowbulb41"]
+modulate = Color(2.703, 0.541, 0, 1)
+z_index = 3
+z_as_relative = false
+position = Vector2(5, 1.99999)
+scale = Vector2(0.0587499, 0.0587499)
+texture = ExtResource("8_ctv0i")
+
+[node name="BG1" type="Sprite2D" parent="."]
+z_index = -15
+position = Vector2(657, 562)
+scale = Vector2(1.94097, 1.94097)
+texture = ExtResource("9_4d8ma")
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(959, 541)
+scale = Vector2(30, 16.875)
+energy = 0.85
+blend_mode = 1
+texture = SubResource("GradientTexture2D_rgjma")
+metadata/_edit_lock_ = true
+
+[node name="Shader" type="Sprite2D" parent="."]
+z_index = -3
+material = SubResource("ShaderMaterial_7l3jr")
+position = Vector2(984, 637.501)
+scale = Vector2(17.9531, 10.0235)
+texture = ExtResource("11_s56um")
+metadata/_edit_lock_ = true
+
+[node name="Shader2" type="Sprite2D" parent="."]
+z_index = -3
+material = SubResource("ShaderMaterial_kgyae")
+position = Vector2(987, -1158.5)
+scale = Vector2(17.9531, 18.0235)
+texture = ExtResource("11_s56um")
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+z_index = 2
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAAAABYAAAAIAAkAAAABABYAAAAJAAkAAAACABYAAAAKAAkAAAADABYAAAALAAkAAAAEABYAAAAJAAkAAAAFABYAAAAKAAkAAAAGABYAAAALAAkAAAAHABYAAAAJAAkAAAAIABYAAAAKAAkAAAAJABYAAAALAAkAAAAKABYAAAAJAAkAAAALABYAAAAKAAkAAAAMABYAAAALAAkAAAANABYAAAAJAAkAAAAOABYAAAAKAAkAAAAPABYAAAALAAkAAAAQABYAAAAJAAkAAAARABYAAAAKAAkAAAASABYAAAALAAkAAAATABYAAAAJAAkAAAAUABYAAAAKAAkAAAAVABYAAAALAAkAAAAWABYAAAAJAAkAAAAXABYAAAAKAAkAAAAiABYAAAAJAAkAAAAjABYAAAAKAAkAAAAkABYAAAALAAkAAAAlABYAAAAJAAkAAAAmABYAAAAKAAkAAAAnABYAAAAMAAkAAAAIABQAAAAJAAwAAAAIABUAAAAIAAsAAAAIABMAAAAJAAwAAAAIABIAAAAIAAkAAAAJABIAAAAJAAkAAAAKABIAAAAKAAkAAAALABIAAAALAAkAAAAMABIAAAAJAAkAAAAMABUAAAAJAAsAAAAJABUAAAAJAAsAAAAKABUAAAAKAAsAAAALABUAAAALAAsAAAAJABQAAAAIAAwAAAAJABMAAAAIAAwAAAAKABMAAAAIAAwAAAALABMAAAAIAAwAAAAMABMAAAAKAAwAAAANABMAAAAMAAoAAAANABQAAAAMAAoAAAAMABQAAAAKAAwAAAALABQAAAAIAAwAAAAKABQAAAAIAAwAAAATABUAAAAIAAsAAAAUABUAAAAKAAsAAAAVABUAAAALAAsAAAAWABUAAAAJAAsAAAAXABUAAAAMAAsAAAAXABEAAAAMAAkAAAAXABIAAAAMAAoAAAAXABMAAAAMAAoAAAAXABQAAAAMAAoAAAAWABEAAAAJAAkAAAAWABIAAAAKAAwAAAAWABMAAAAKAAwAAAAWABQAAAAKAAwAAAAUABEAAAAJAAkAAAAVABEAAAAJAAkAAAAVABIAAAAIAAwAAAAUABIAAAAJAAwAAAAUABMAAAAJAAwAAAAVABMAAAAIAAwAAAAVABQAAAAIAAwAAAAUABQAAAAJAAwAAAATABQAAAAIAAoAAAATABMAAAAIAAoAAAATABIAAAAIAAoAAAATABEAAAAIAAkAAAAHABIAAAAIAAkAAAAHABMAAAAIAAoAAAAHABQAAAAIAAoAAAAHABUAAAAIAAsAAAANABIAAAAMAAkAAAANABUAAAAMAAsAAAAhABYAAAAKAAkAAAAgABYAAAAKAAkAAAAfABYAAAAKAAkAAAAeABYAAAAIAAkAAAA=")
+tile_set = SubResource("TileSet_iyk7s")
+
+[node name="Path2D" parent="." instance=ExtResource("5_8m1xj")]
+position = Vector2(1531, 628)
+scale = Vector2(1, 1.5)
+
+[node name="Area2D2" parent="." instance=ExtResource("4_3rxyd")]
+z_index = 2
+position = Vector2(1706, 488)
+scale = Vector2(0.75, 0.75)
+
+[node name="Path2D2" parent="." instance=ExtResource("5_8m1xj")]
+position = Vector2(1541, 333)
+scale = Vector2(1, 1.5)
+
+[node name="Path2D7" parent="." instance=ExtResource("12_d474r")]
+position = Vector2(736, 349)
+scale = Vector2(1.5, 1.5)
+
+[node name="Path2D8" parent="." instance=ExtResource("12_d474r")]
+position = Vector2(9, 250)
+scale = Vector2(1.5, 1.5)
+
+[node name="Area2D3" parent="." instance=ExtResource("4_3rxyd")]
+z_index = -1
+position = Vector2(149, 89)
+scale = Vector2(0.75, 0.75)
+
+[node name="ShallowsSprite" type="Sprite2D" parent="."]
+z_index = -14
+texture_filter = 1
+position = Vector2(874, -671.25)
+scale = Vector2(9.03125, 6.91406)
+texture = ExtResource("13_jmn75")
+metadata/_edit_lock_ = true
+
+[node name="RocksForeground" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+position = Vector2(945.5, 549)
+scale = Vector2(1.12865, 1.03704)
+texture = ExtResource("14_hslv0")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D2" parent="." instance=ExtResource("2_kq3ct")]
+position = Vector2(1077, -829)
+rotation = 1.5708
+metadata/_edit_lock_ = true
+
+[node name="Path2D3" parent="." instance=ExtResource("16_t83b8")]
+position = Vector2(666, -225)
+scale = Vector2(2, 2)
+
+[node name="Area2D4" parent="." instance=ExtResource("17_i1h2j")]
+position = Vector2(1089, -331)
+scale = Vector2(5, 5)
+
+[node name="RigidBody2D" parent="." instance=ExtResource("18_0p537")]
+position = Vector2(1771, -382)
+
+[node name="RigidBody2D2" parent="." instance=ExtResource("19_uatct")]
+position = Vector2(996, -744)
+
+[node name="Path2D5" parent="." instance=ExtResource("20_8kmef")]
+position = Vector2(86, -824)
+scale = Vector2(1.5, 1.5)
+
+[node name="Area2D5" parent="." instance=ExtResource("4_3rxyd")]
+z_index = -1
+position = Vector2(184, -979)
+scale = Vector2(0.75, 0.75)
+
+[node name="Area2D6" parent="." instance=ExtResource("4_3rxyd")]
+z_index = -1
+position = Vector2(1782, -545)
+scale = Vector2(0.75, 0.75)
+
+[node name="Path2D9" parent="." instance=ExtResource("22_pp330")]
+position = Vector2(1508, -713)
+scale = Vector2(1.5, 1.5)
+
+[node name="Cd1d10b6d98Ddb8Fce79Fbba10Dd5e30" type="Sprite2D" parent="."]
+z_index = -14
+position = Vector2(980, -1697)
+scale = Vector2(2.66576, 1.67663)
+texture = ExtResource("23_s5846")
+metadata/_edit_lock_ = true
+
+[node name="Path2D6" parent="." instance=ExtResource("20_8kmef")]
+position = Vector2(86, -824)
+scale = Vector2(1.5, 1.5)
+
+[node name="Path2D10" parent="." instance=ExtResource("22_pp330")]
+position = Vector2(75, -1230)
+scale = Vector2(1.5, 1.5)
+
+[node name="Area2D7" parent="." instance=ExtResource("24_2govh")]
+position = Vector2(536, 807)
+scale = Vector2(5, 5)
+
+[node name="RocksForeground2" type="Sprite2D" parent="."]
+position = Vector2(959.5, -546)
+scale = Vector2(1.00365, 1)
+texture = ExtResource("25_iwdj8")
+
+[node name="WallBorder" parent="." instance=ExtResource("2_kq3ct")]
+position = Vector2(1076, -2591)
+rotation = 1.5708
+
+[node name="WallBorder2" parent="." instance=ExtResource("2_kq3ct")]
+position = Vector2(2994, -1899)
+rotation = 1.5708
+
+[node name="Path2D11" parent="." instance=ExtResource("26_a2h6u")]
+position = Vector2(655, -1339)
+scale = Vector2(1.2, 1.5)
+curve = SubResource("Curve2D_8ibf6")
+
+[node name="Path2D13" parent="." instance=ExtResource("26_a2h6u")]
+position = Vector2(808, -1681)
+scale = Vector2(1.2, 1.5)
+curve = SubResource("Curve2D_afhy0")
+
+[node name="Path2D15" parent="." instance=ExtResource("20_8kmef")]
+position = Vector2(-288, -1824)
+scale = Vector2(1.5, 1.5)
+
+[node name="Path2D16" parent="." instance=ExtResource("20_8kmef")]
+position = Vector2(1426, -1658)
+scale = Vector2(1.5, 1.5)
+
+[node name="Path2D12" parent="." instance=ExtResource("26_a2h6u")]
+position = Vector2(307, -1961)
+curve = SubResource("Curve2D_63wyk")
+speed = 1.3
+
+[node name="BgTemp2" type="Sprite2D" parent="."]
+z_index = -13
+position = Vector2(916, -2884)
+scale = Vector2(1, 1.11728)
+texture = ExtResource("5_x271o")
+metadata/_edit_lock_ = true
+
+[node name="Path2D17" parent="." instance=ExtResource("16_t83b8")]
+position = Vector2(677, -2560)
+scale = Vector2(5, 4)
+
+[node name="Area2D8" parent="." instance=ExtResource("25_smul2")]
+position = Vector2(1741, -2624)
+rotation = 6.28319
+
+[node name="Area2D9" parent="." instance=ExtResource("25_smul2")]
+position = Vector2(1317, -2624)
+
+[node name="Area2D10" parent="." instance=ExtResource("25_smul2")]
+position = Vector2(1537, -2625)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("26_sm777")
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+z_index = 20
+offset_left = 30.0
+offset_top = 13.0
+offset_right = 110.0
+offset_bottom = 91.0
+text = "Restart?"
+
+[node name="WallBorder3" parent="." instance=ExtResource("2_kq3ct")]
+position = Vector2(2994, -3605)
+rotation = 1.5708
+
+[node name="WallBorder4" parent="." instance=ExtResource("2_kq3ct")]
+position = Vector2(1075, -3589)
+rotation = 1.5708
+
+[node name="WallBorder5" parent="." instance=ExtResource("2_kq3ct")]
+position = Vector2(2992, -848)
+rotation = 1.5708
+
+[connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer" method="_on_button_pressed"]

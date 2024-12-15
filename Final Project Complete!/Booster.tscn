@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2uu5p2g3y0qj"]
+
+[ext_resource type="Script" path="res://booster.gd" id="1_kqxy0"]
+[ext_resource type="Texture2D" uid="uid://ddta5tl64dnc4" path="res://Bubble stream spritesheet.png" id="2_4sl56"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_svsy2"]
+size = Vector2(19, 369)
+
+[sub_resource type="Animation" id="Animation_ogojw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jiiaq"]
+resource_name = "bubbles"
+length = 0.13
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tcfuo"]
+_data = {
+"RESET": SubResource("Animation_ogojw"),
+"bubbles": SubResource("Animation_jiiaq")
+}
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_kqxy0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_svsy2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0.499999, 0)
+scale = Vector2(0.835, 0.74125)
+texture = ExtResource("2_4sl56")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tcfuo")
+}
+speed_scale = 0.3
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

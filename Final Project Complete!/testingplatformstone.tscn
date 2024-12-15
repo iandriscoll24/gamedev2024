@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6uqktob823px"]
+
+[ext_resource type="Script" path="res://movingplatform.gd" id="1_j1vgn"]
+[ext_resource type="Texture2D" uid="uid://du1vembo7wm3g" path="res://Stone platform.png" id="2_4kors"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8be0c"]
+size = Vector2(15.5, 1.6)
+
+[sub_resource type="Animation" id="Animation_umf5d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_6o20k"]
+resource_name = "move"
+length = 2.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(-1.5, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t230e"]
+_data = {
+"RESET": SubResource("Animation_umf5d"),
+"move": SubResource("Animation_6o20k")
+}
+
+[node name="Path2D" type="Path2D"]
+script = ExtResource("1_j1vgn")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(173, 0)
+rotates = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
+remote_path = NodePath("../../AnimatableBody2D")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+position = Vector2(173, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
+z_index = 4
+texture_filter = 1
+position = Vector2(-0.66191, 0.5)
+scale = Vector2(0.33092, 0.428571)
+texture = ExtResource("2_4kors")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(1.52588e-05, 0)
+scale = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_8be0c")
+one_way_collision = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+callback_mode_process = 0
+libraries = {
+"": SubResource("AnimationLibrary_t230e")
+}

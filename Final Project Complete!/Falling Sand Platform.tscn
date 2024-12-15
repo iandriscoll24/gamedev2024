@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2kkfsorraoxx"]
+
+[ext_resource type="Script" path="res://falling_sand_platform.gd" id="1_r3iba"]
+[ext_resource type="Texture2D" uid="uid://bthl6gweki836" path="res://Sand platform.png" id="2_xcr8g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q03ay"]
+size = Vector2(958, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_myoxt"]
+size = Vector2(1796, 96)
+
+[sub_resource type="Animation" id="Animation_tlm0t"]
+resource_name = "shake"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(9.68575e-08, 0.466667, 0.7, 0.866667, 1, 1.5, 1.7, 1.9, 2.06667, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-94, 0), Vector2(1, 0), Vector2(85, 0), Vector2(1, 0), Vector2(85, 0), Vector2(1, 0), Vector2(-84, 0), Vector2(1, 0), Vector2(-84, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s8j6q"]
+_data = {
+"shake": SubResource("Animation_tlm0t")
+}
+
+[node name="RigidBody2D" type="RigidBody2D"]
+lock_rotation = true
+freeze = true
+script = ExtResource("1_r3iba")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(1.02686, 0)
+scale = Vector2(0.5, 0.75)
+shape = SubResource("RectangleShape2D_q03ay")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.95099e-05, 0)
+scale = Vector2(0.5, 0.75)
+texture = ExtResource("2_xcr8g")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(5.83463, -2)
+scale = Vector2(0.5, 0.75)
+monitorable = false
+
+[node name="PlayerDetect" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-10.6693, -70.6667)
+scale = Vector2(0.5, 0.75)
+shape = SubResource("RectangleShape2D_myoxt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_s8j6q")
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

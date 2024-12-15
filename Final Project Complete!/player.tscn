@@ -1,0 +1,128 @@
+[gd_scene load_steps=15 format=3 uid="uid://dj4qt1r66hdfx"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_lpajq"]
+[ext_resource type="Script" path="res://camera_2d.gd" id="2_o0cyq"]
+[ext_resource type="Texture2D" uid="uid://b4uolgit2grac" path="res://Crab Spritesheet.png" id="2_x7p6k"]
+[ext_resource type="AudioStream" uid="uid://cir74c5xrwd76" path="res://underwater-245900.mp3" id="4_a7mx3"]
+[ext_resource type="AudioStream" uid="uid://duwjyegoy8yvl" path="res://heavy-bubbles-35889.mp3" id="4_y6cb4"]
+[ext_resource type="AudioStream" uid="uid://bok8apnrxisea" path="res://bubble-sound-43207.mp3" id="5_0g6jk"]
+[ext_resource type="AudioStream" uid="uid://bwmbgs2y473h4" path="res://the-magic-pearl-chill-out-music-11917.mp3" id="5_ibh0a"]
+[ext_resource type="AudioStream" uid="uid://dq327e2kcls8" path="res://ocean-diving-underwater-chill-music-5457.mp3" id="6_7ggmm"]
+[ext_resource type="AudioStream" uid="uid://bfmf50qo5eyct" path="res://win-in-the-video-game-191820.mp3" id="6_kdq5v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xnmak"]
+size = Vector2(96, 128)
+
+[sub_resource type="Animation" id="Animation_a1tn3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mrcv8"]
+resource_name = "charge_left"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.03333, 2, 2.96667, 4.03333, 5.06667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qbslf"]
+_data = {
+"RESET": SubResource("Animation_a1tn3"),
+"charge_left": SubResource("Animation_mrcv8")
+}
+
+[sub_resource type="Curve" id="Curve_n1yy3"]
+_data = [Vector2(0.0224719, 1), 0.0, 0.0, 0, 0, Vector2(0.994382, 0.021978), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
+z_index = 5
+position = Vector2(0, 270)
+slide_on_ceiling = false
+script = ExtResource("1_lpajq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.875, -60.127)
+shape = SubResource("RectangleShape2D_xnmak")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0.875, -62.127)
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+script = ExtResource("2_o0cyq")
+
+[node name="Level1Song" type="AudioStreamPlayer2D" parent="Camera2D"]
+position = Vector2(-0.875, 62.127)
+stream = ExtResource("6_7ggmm")
+
+[node name="Level2Song" type="AudioStreamPlayer2D" parent="Camera2D"]
+position = Vector2(-0.875, 62.127)
+stream = ExtResource("4_a7mx3")
+max_distance = 10000.0
+
+[node name="Level3Song" type="AudioStreamPlayer2D" parent="Camera2D"]
+stream = ExtResource("5_ibh0a")
+max_distance = 10000.0
+
+[node name="Level4Song" type="AudioStreamPlayer2D" parent="Camera2D"]
+stream = ExtResource("6_kdq5v")
+max_distance = 10000.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+texture_filter = 1
+position = Vector2(4.875, -60.127)
+scale = Vector2(1.77734, 1.77734)
+texture = ExtResource("2_x7p6k")
+hframes = 6
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qbslf")
+}
+
+[node name="DirectionTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+z_index = 4
+position = Vector2(2, -113)
+amount = 20
+gravity = Vector2(0, -980)
+angular_velocity_min = -290.91
+angular_velocity_max = 421.82
+scale_amount_min = 20.0
+scale_amount_max = 20.0
+scale_amount_curve = SubResource("Curve_n1yy3")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_y6cb4")
+
+[node name="AudioBubblePop" type="AudioStreamPlayer2D" parent="." groups=["player"]]
+stream = ExtResource("5_0g6jk")
+volume_db = 20.0
+
+[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
